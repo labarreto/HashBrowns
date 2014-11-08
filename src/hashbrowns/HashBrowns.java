@@ -73,16 +73,33 @@ public class HashBrowns {
         
         public HashBrown(int size) {
             this.data = new Object[size];
-            HashMap<K,V> empty;
+            HashMappy<K,V> empty = new HashyMT<K,V>();
+            for (int i = 0 ; i <  this.data.length; i ++) {
+                this.data[i] = empty;
+                //are you putting an empty hashtable in an array? 
+               
+            }
             
         }
         
+        private int indexOf(K key) {
+            return key.hashCode() % this.data.length;
+            //what is this doing?
+        }
+        
+        private Hashy<K,V> small(int index) {
+            return ((Hashy<K,V>) (this.data[index]));
+        }
+        
+        
         public V lookup (K key, V value) {
-            
+            return this.small(this.indexOf(key)).lookup(key, value);
         }
         
         public void add (K key, V value) {
-            
+            int index = this.indexOf(key);
+            this.data[index] = this.small(index).add(key, value);
+            return; //why?
         }
     }
     
